@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package imaginarium;
+
+option go_package = "lego963.rdp.v1;rdpv1";
+
+service Imaginarium {
+  rpc UploadFile (FileRequest) returns (FileResponse);
+  rpc DownloadFile (FileRequest) returns (stream FileChunk);
+  rpc ListFiles (Empty) returns (FilesList);
+}
+
+message FileRequest {
+  string filename = 1;
+  bytes content = 2;
+}
+
+message FileResponse {
+  string filename = 1;
+  string message = 2;
+}
+
+message FileChunk {
+  bytes content = 1;
+}
+
+message Empty {}
+
+message FileInfo {
+  string filename = 1;
+  string created_at = 2;
+  string updated_at = 3;
+}
+
+message FilesList {
+  repeated FileInfo files = 1;
+}
